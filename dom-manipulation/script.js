@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             : quotes.filter(quote => quote.category.toLowerCase() === selectedCategory.toLowerCase());
 
         if (filteredQuotes.length === 0) {
-            quoteDisplay.innerText = "No quotes available for this category.";
+            displayRandomQuote.innerText = "No quotes available for this category.";
             return;
         }
 
