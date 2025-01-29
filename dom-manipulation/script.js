@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const randomIndex = Math.floor(Math.random() * filteredQuotes.length);
-        displayRandomQuote.innerText = `"${filteredQuotes[randomIndex].text}" - ${filteredQuotes[randomIndex].category}`;
+        displayRandomQuotes.innerText = `"${filteredQuotes[randomIndex].text}" - ${filteredQuotes[randomIndex].category}`;
     }
 
     // Function to add a new quote
