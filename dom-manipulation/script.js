@@ -21,12 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
             : quotes.filter(quote => quote.category.toLowerCase() === selectedCategory.toLowerCase());
 
         if (filteredQuotes.length === 0) {
-            quoteDisplay.innerText = "No quotes available for this category.";
+            quoteDisplay.innerHTML = "No quotes available for this category.";
             return;
         }
 
         const randomIndex = Math.floor(Math.random() * filteredQuotes.length);
-        displayRandomQuotes.innerText = `"${filteredQuotes[randomIndex].text}" - ${filteredQuotes[randomIndex].category}`;
+        quoteDisplay.innerHTML = `"${filteredQuotes[randomIndex].text}" - ${filteredQuotes[randomIndex].category}`;
     }
 
     // Function to add a new quote
