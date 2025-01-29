@@ -21,12 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
             : quotes.filter(quote => quote.category.toLowerCase() === selectedCategory.toLowerCase());
 
         if (filteredQuotes.length === 0) {
-            displayRandomQuote.innerText = "No quotes available for this category.";
+            quoteDisplay.innerText = "No quotes available for this category.";
             return;
         }
 
         const randomIndex = Math.floor(Math.random() * filteredQuotes.length);
-        quoteDisplay.innerText = `"${filteredQuotes[randomIndex].text}" - ${filteredQuotes[randomIndex].category}`;
+        displayRandomQuote.innerText = `"${filteredQuotes[randomIndex].text}" - ${filteredQuotes[randomIndex].category}`;
     }
 
     // Function to add a new quote
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         quotes.push({ text: quoteText, category: quoteCategory });
 
-        // Add new category to dropdown if not already present
+        // Add new category to dropdown 
         if (![...categorySelect.options].some(option => option.value.toLowerCase() === quoteCategory.toLowerCase())) {
             const newOption = document.createElement('option');
             newOption.value = quoteCategory;
