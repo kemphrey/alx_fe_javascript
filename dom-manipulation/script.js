@@ -38,6 +38,32 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Please enter both a quote and a category.");
             return;
         }
+        // Function to create and display the add quote form
+    function createAddQuoteForm() {
+        quoteFormContainer.innerHTML = ''; // Clear existing form (if any)
+
+        const form = document.createElement('div');
+
+        const inputQuote = document.createElement('input');
+        inputQuote.id = 'newQuoteText';
+        inputQuote.type = 'text';
+        inputQuote.placeholder = 'Enter a new quote';
+
+        const inputCategory = document.createElement('input');
+        inputCategory.id = 'newQuoteCategory';
+        inputCategory.type = 'text';
+        inputCategory.placeholder = 'Enter quote category';
+
+        const addButton = document.createElement('button');
+        addButton.innerText = 'Add Quote';
+        addButton.addEventListener('click', addQuote);
+
+        form.appendChild(inputQuote);
+        form.appendChild(inputCategory);
+        form.appendChild(addButton);
+
+        quoteFormContainer.appendChild(form);
+    }
 
         quotes.push({ text: quoteText, category: quoteCategory });
 
