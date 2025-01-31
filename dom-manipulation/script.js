@@ -9,6 +9,16 @@ const lastSyncTime = document.getElementById("lastSyncTime");
 
 // Load quotes from local storage
 let quotes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
+// 🛑 Show Notification
+function showNotification(message, type = "info") {
+    notificationBox.innerHTML = message;
+    notificationBox.className = `notification ${type}`;
+    notificationBox.style.display = "block";
+    
+    setTimeout(() => {
+        notificationBox.style.display = "none";
+    }, 3000);
+}
 
 // 🟢 Fetch Quotes from Mock Server
 async function fetchQuotesFromServer() {
@@ -19,13 +29,21 @@ async function fetchQuotesFromServer() {
         let localQuotes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
         let mergedQuotes = mergeQuotes(localQuotes, serverQuotes);
 
+        // 🛑 Conflict Resolution: Notify if local data was overwritten
+        if (localQuotes.length > 0 && mergedQuotes.length !== localQuotes.length) {
+            showNotification("⚠️ Some local quotes were updated from the server!", "warning");
+        }
+
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(mergedQuotes));
         quotes = mergedQuotes;
         displayRandomQuote();
         populateCategories();
         updateSyncTime();
+        
+        showNotification("✅ Quotes synced with server!", "success"); // 🆕 Notify user
     } catch (error) {
         console.error("Error fetching quotes:", error);
+        showNotification("❌ Error syncing quotes. Check your connection!", "error"); // 🆕 Show error
     }
 }
 
