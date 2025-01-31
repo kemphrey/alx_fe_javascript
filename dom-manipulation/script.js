@@ -10,8 +10,8 @@ const lastSyncTime = document.getElementById("lastSyncTime");
 // Load quotes from local storage
 let quotes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
 
-// 🟢 Fetch Quotes from Mock Server
-async function fetchQuotesFromServer() {
+// 🔄 Sync Quotes (Fetch + Merge)
+async function syncQuotes() {
     try {
         const response = await fetch(API_URL);
         const serverQuotes = await response.json();
@@ -21,10 +21,11 @@ async function fetchQuotesFromServer() {
 
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(mergedQuotes));
         quotes = mergedQuotes;
+
         displayRandomQuote();
         updateSyncTime();
     } catch (error) {
-        console.error("Error fetching quotes:", error);
+        console.error("Error syncing quotes:", error);
     }
 }
 
@@ -42,7 +43,7 @@ function mergeQuotes(local, server) {
     return merged;
 }
 
-// 🆕 Add New Quote (Local + Server)
+// 🆕 Add New Quote
 async function addQuote() {
     const quoteText = document.getElementById("newQuoteText").value;
     const category = document.getElementById("newQuoteCategory").value;
@@ -93,20 +94,6 @@ async function syncLocalChanges() {
     }
 
     updateSyncTime();
-}
-
-// 🗑 Remove Quote
-async function removeQuote(quoteId) {
-    quotes = quotes.filter(q => q.id !== quoteId);
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(quotes));
-
-    try {
-        await fetch(`${API_URL}/${quoteId}`, { method: "DELETE" });
-    } catch (error) {
-        console.error("Error deleting quote:", error);
-    }
-
-    displayRandomQuote();
 }
 
 // 🔄 Display a Random Quote
@@ -174,16 +161,16 @@ function updateSyncTime() {
 
 // 🏁 Initialize App
 document.addEventListener("DOMContentLoaded", () => {
-    fetchQuotesFromServer();
+    syncQuotes();
     populateCategories();
     displayRandomQuote();
 });
 
 // 🕒 Auto-Sync Every 60 Seconds
-setInterval(fetchQuotesFromServer, 60000);
+setInterval(syncQuotes, 60000);
 
 // ✅ Event Listeners
 newQuoteBtn.addEventListener("click", displayRandomQuote);
 document.getElementById("importFile").addEventListener("change", importQuotes);
 document.getElementById("exportQuotes").addEventListener("click", exportQuotes);
-document.getElementById("syncButton").addEventListener("click", syncLocalChanges);
+document.getElementById("syncButton").addEventListener("click", syncQuotes);
