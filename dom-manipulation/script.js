@@ -6,7 +6,7 @@ const quoteDisplay = document.getElementById("quoteDisplay");
 const newQuoteBtn = document.getElementById("newQuote");
 const categoryFilter = document.getElementById("categoryFilter");
 const lastSyncTime = document.getElementById("lastSyncTime");
-const notificationBox = document.getElementById("notificationBox"); // 🆕 Add this to your HTML!
+const notificationBox = document.getElementById("notificationBox"); // 🆕 For notifications
 
 // Load quotes from local storage
 let quotes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
@@ -16,7 +16,7 @@ function showNotification(message, type = "info") {
     notificationBox.innerHTML = message;
     notificationBox.className = `notification ${type}`;
     notificationBox.style.display = "block";
-    
+
     setTimeout(() => {
         notificationBox.style.display = "none";
     }, 3000);
@@ -41,7 +41,7 @@ async function fetchQuotesFromServer() {
         displayRandomQuote();
         populateCategories();
         updateSyncTime();
-        
+
         showNotification("✅ Quotes synced with server!", "success"); // 🆕 Notify user
     } catch (error) {
         console.error("Error fetching quotes:", error);
