@@ -87,6 +87,17 @@ async function addQuote() {
         timestamp: new Date().toISOString()
     };
 
+    function createAddQuoteForm() {
+        const formContainer = document.createElement("div");
+        formContainer.innerHTML = `
+            <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
+            <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
+            <button id="addQuoteBtn">Add Quote</button>
+        `;
+        document.body.appendChild(formContainer);
+
+        document.getElementById("addQuoteBtn").addEventListener("click", addQuote);
+    }
     quotes.push(newQuote);
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(quotes));
 
@@ -225,6 +236,8 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchQuotesFromServer();
     populateCategories();
     displayRandomQuote();
+    createAddQuoteForm();
+    showRandomQuote();
 });
 
 // 🕒 Auto-Sync Every 60 Seconds
