@@ -46,6 +46,15 @@ async function fetchQuotesFromServer() {
         showNotification("❌ Error syncing quotes. Check your connection!", "error"); // 🆕 Show error
     }
 }
+function showRandomQuote() {
+    if (quotes.length === 0) {
+        quoteDisplay.innerHTML = "No quotes available. Add one!";
+        return;
+    }
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    const quote = quotes[randomIndex];
+    quoteDisplay.innerHTML = `<p>"${quote.text}"</p><p><em>- ${quote.category}</em></p>`;
+}
 
 // 🔄 Merge Local and Server Quotes (Avoid Duplication)
 function mergeQuotes(local, server) {
