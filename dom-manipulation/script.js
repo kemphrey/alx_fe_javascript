@@ -207,7 +207,7 @@ function importQuotes(event) {
 // 🔍 Populate Category Filter
 function populateCategories() {
     let categories = ["All Categories", ...new Set(quotes.map(q => q.category))];
-    categoryFilter.innerHTML = categories
+    categoryFilter.textContent = categories
         .map(cat => `<option value="${cat}">${cat}</option>`)
         .join("");
 }
